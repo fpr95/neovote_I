@@ -9,8 +9,8 @@ public class VoterGetDTO {
 
     @Setter(value = AccessLevel.NONE)
     public Long id;
-    private String v_name;
-    private String v_lastname;
+    private String name;
+    private String lastname;
 
 //	public Long getId() { return id; }
 //

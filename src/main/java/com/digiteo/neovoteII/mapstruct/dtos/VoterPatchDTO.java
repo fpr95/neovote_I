@@ -1,27 +1,23 @@
 package com.digiteo.neovoteII.mapstruct.dtos;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.*;
 
 @Data // (@Getter, @Setter, @ToString, @EqualsAndHashCode y @RequiredArgsConstructor)
 @NoArgsConstructor
 @AllArgsConstructor
-// The jackson annotation below is for serializing only so it's not useful for the PATCH's issue
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class VoterDTO {
+public class VoterPatchDTO {
 
-    @NotBlank(message = "El campo Nombre es obligatorio")
     @Size(min = 2, message = "Ingrese su nombre")
     private String name;
 
-    @NotBlank(message = "El campo Apellido es obligatorio")
     @Size(min = 2, message = "Ingrese su apellido")
     private String lastname;
 
-    @NotEmpty
-    @Size(min = 8, message = "La contraseña debe tener como mínimo 8 caracteres")
+    @Size(min = 8, message = "La contraseña debe tener como mínimo 8 caracteres y como máximo 20")
     @Pattern(
             regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8, 20}$",
             message = "La contraseña debe contener al menos una minúscula, una mayúscula, un número y un símbolo"
@@ -41,8 +37,5 @@ public class VoterDTO {
             message = "Ingrese un correo válido (@Pattern)"
     )
     private String email;
-
-
-    // check if @Past and @AssertTrue should be in entity
 
 }

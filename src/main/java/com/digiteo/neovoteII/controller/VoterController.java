@@ -6,19 +6,13 @@ import java.util.List;
 
 import com.digiteo.neovoteII.mapstruct.dtos.VoterDTO;
 import com.digiteo.neovoteII.mapstruct.dtos.VoterGetDTO;
+import com.digiteo.neovoteII.mapstruct.dtos.VoterPatchDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 //import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.digiteo.neovoteII.service.VoterServiceImp;
 
@@ -57,10 +51,10 @@ public class VoterController {
                 .body("El usuario " + vDTO.getName() + " ha sido registrado exitosamente.");
     }
 
-    @PutMapping(path = "/{id}")
+    @PatchMapping(path = "/{id}")
     public ResponseEntity<?> updateVoterWithMapper(
-            @PathVariable Long id,@RequestBody VoterDTO vDTO) {
-        voterServiceImp.partialUpdateVoterWithMapper(id, vDTO);
+            @PathVariable Long id,@Valid @RequestBody VoterPatchDTO vPatchDTO) {
+        voterServiceImp.partialUpdateVoterWithMapper(id, vPatchDTO);
         return ResponseEntity.status(HttpStatus.ACCEPTED)
                 .body("Sus datos se han modificado exitosamente");
     }
@@ -71,5 +65,6 @@ public class VoterController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body("Su perfil se ha eliminado del sistema");
     }
+
 
 }
