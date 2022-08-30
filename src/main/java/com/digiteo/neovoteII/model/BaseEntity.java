@@ -28,15 +28,15 @@ public abstract class BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     public static final int INIT_SEQ = 100;
     @Id
-    @SequenceGenerator(
-            name = "seq_global",
-            sequenceName = "seq_global",
-            allocationSize = 1,
-            initialValue = INIT_SEQ
-    )
+    //@SequenceGenerator(
+            //name = "seq_global",
+            //sequenceName = "seq_global",
+            //allocationSize = 1,
+            //initialValue = INIT_SEQ
+    //)
     @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "seq_global"
+            strategy = GenerationType.IDENTITY
+            //generator = "seq_global"
     )
     @Column(
             updatable = false,

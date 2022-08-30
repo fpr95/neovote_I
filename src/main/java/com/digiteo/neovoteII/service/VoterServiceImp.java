@@ -43,11 +43,9 @@ public class VoterServiceImp implements VoterService{
     @Transactional
     public void addNewVoter(VoterDTO vDTO) {
         Optional<Voter> voterOptional = voterRepository.findVoterByPhone(vDTO.getPhone());
-
         if(voterOptional.isPresent()) { throw new IllegalStateException("Este número ya está asociado a un votante en el sistema, eliga otro."); }
 
         voterOptional = voterRepository.findVoterByEmail(vDTO.getEmail());
-
         if(voterOptional.isPresent()) { throw new IllegalStateException("Este correo ya está asociado a un votante en el sistema, eliga otro."); }
 
         voterRepository.save(voterMapper.toEntity(vDTO));

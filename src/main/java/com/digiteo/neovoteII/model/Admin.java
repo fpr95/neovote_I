@@ -53,11 +53,11 @@ public class Admin extends BaseEntity {
     private String a_email;
 
     @Column(
-            name = "a_enabled",
+            name = "enabled",
             nullable = false,
-            columnDefinition = "TINYINT DEFAULT (1)"
+            columnDefinition = "TINYINT DEFAULT (0)"
     )
-    private boolean a_enabled;
+    private boolean a_enabled = false; //this stays as it is until configure cases 1 and 2
 
     @Column(
             name = "register_date_time",

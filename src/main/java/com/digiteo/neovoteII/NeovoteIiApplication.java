@@ -1,6 +1,8 @@
 package com.digiteo.neovoteII;
 
+import com.digiteo.neovoteII.model.Admin;
 import com.digiteo.neovoteII.model.Voter;
+import com.digiteo.neovoteII.repository.AdminRepository;
 import com.digiteo.neovoteII.repository.VoterRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -18,7 +20,7 @@ public class NeovoteIiApplication {
 	}
 
 	@Bean
-	CommandLineRunner commandLineRunner(VoterRepository voterRepository) {
+	CommandLineRunner commandLineRunner(AdminRepository adminRepository, VoterRepository voterRepository) {
 		return args -> {
 			List<Voter> voters = new ArrayList<Voter>();
 
@@ -38,6 +40,14 @@ public class NeovoteIiApplication {
 			voters.add(maria);
 
 			voterRepository.saveAll(voters);
+
+			Admin admin = new Admin("Admin",
+					"Istrador",
+					"qwertyadmin2022",
+					"+569 85668956",
+					"admin_pulento@gmail.com");
+
+			adminRepository.save(admin);
 		};
 	}
 
