@@ -1,11 +1,10 @@
 package com.digiteo.neovoteII.model;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 
 import lombok.*;
 
@@ -16,9 +15,9 @@ import lombok.*;
 @ToString
 @Entity(name = "voter")
 @Table(
-        name = "voter",
+        name = "voters",
         uniqueConstraints = {
-                @UniqueConstraint(name = "voter_field_unique", columnNames = {"v_phone", "v_email"})
+                @UniqueConstraint(name = "voter_field_unique", columnNames = {"v_userName", "v_rut","v_phone", "v_email"})
         }
 )
 public class Voter extends BaseEntity {
@@ -36,10 +35,25 @@ public class Voter extends BaseEntity {
     private String v_lastname;
 
     @Column(
+            name = "v_userName",
+            nullable = false
+    )
+    private String v_userName;
+
+    @Column(
             name = "v_key",
             nullable = false
     )
     private String v_key;
+
+    // persisting of this field is managed by AttributeConverter
+    private GenderValues gender;
+
+    @Column(
+            name = "v_rut",
+            nullable = false
+    )
+    private String v_rut;
 
     @Column(
             name = "v_phone",
@@ -68,43 +82,52 @@ public class Voter extends BaseEntity {
             columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
     )
     @Setter(AccessLevel.PRIVATE)
-    private OffsetDateTime odt;
+    //search the best type for performance(Date, LocalDateTime, primitive, etc)
+    private OffsetDateTime creationTimestamp;
+
+    @OneToMany(mappedBy = "voter", fetch = FetchType.LAZY) // <--- define cascade type
+    private List<Vote> votes = new ArrayList<Vote>();
 
 
     public Voter(
-            Long id,
             String v_name,
             String v_lastname,
+            String v_userName,
             String v_key,
             String v_phone,
             String v_email) {
-        super(id);
         this.v_name = v_name;
         this.v_lastname = v_lastname;
+        this.v_userName = v_userName;
         this.v_key = v_key;
         this.v_phone = v_phone;
         this.v_email = v_email;
-        this.odt = OffsetDateTime.now();
+        this.creationTimestamp = OffsetDateTime.now();
     }
 
     public Voter(
             String v_name,
             String v_lastname,
+            String v_userName,
             String v_key,
+            GenderValues genderConstant,
+            String v_rut,
             String v_phone,
             String v_email) {
         this.v_name = v_name;
         this.v_lastname = v_lastname;
+        this.v_userName = v_userName;
         this.v_key = v_key;
+        this.gender = genderConstant;
+        this.v_rut = v_rut;
         this.v_phone = v_phone;
         this.v_email = v_email;
-        this.odt = OffsetDateTime.now();
+        this.creationTimestamp = OffsetDateTime.now();
     }
 
     @Override
     public Long getId() { return super.id; }
-    //  -> 16/06/22 Change @Id setter modifier to PRIVATE
-//	-> 05/07/22 Change modifier to PUBLIC as Mapstruct need it that way to achieve the DTO-entity mapping.
+    //Change modifier to PUBLIC as Mapstruct need it that way to achieve the DTO-entity mapping.
     @Override
     public void setId(Long id) { super.setId(id); }
 

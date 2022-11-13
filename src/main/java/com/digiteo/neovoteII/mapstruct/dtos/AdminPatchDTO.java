@@ -4,18 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Data // (@Getter, @Setter, @ToString, @EqualsAndHashCode y @RequiredArgsConstructor)
 @NoArgsConstructor
 @AllArgsConstructor
-public class VoterPatchDTO {
-
-    //@Size(min = 2, message = "Ingrese su nombre")
-    //private String name;
-
-    //@Size(min = 2, message = "Ingrese su apellido")
-    //private String lastname;
+public class AdminPatchDTO {
 
     @Size(min = 2, message = "Su nombre de usuario debe contener como mínimo 2 caracteres")
     private String userName;
@@ -40,5 +36,4 @@ public class VoterPatchDTO {
             message = "Ingrese un correo válido (regex)"
     )
     private String email;
-
 }

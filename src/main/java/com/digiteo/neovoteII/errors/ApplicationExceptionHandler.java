@@ -39,7 +39,6 @@ public class ApplicationExceptionHandler {
                                                                                  WebRequest request){
         /**
          Collections#emptyList() and #emptyMap() creates inmutable instances of each so the add/put methods will NOT work
-         Search for solution in Spring's DI or modify this methods logic [28/07/22 23:35]
           */
         List<String> errors = new ArrayList<>();
         errors.add(ex.getMessage());

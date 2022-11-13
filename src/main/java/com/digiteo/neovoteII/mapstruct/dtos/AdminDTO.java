@@ -1,17 +1,16 @@
 package com.digiteo.neovoteII.mapstruct.dtos;
 
 import com.digiteo.neovoteII.model.GenderValues;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.*;
 
 @Data // @Getter, @Setter, @ToString, @EqualsAndHashCode & @RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
-// The jackson annotation is for serializing only so it's not useful for the PATCH's issue003(issues_neovote_ii.txt)
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class VoterDTO {
+public class AdminDTO {
 
     @NotBlank(message = "El campo Nombre es obligatorio")
     @Size(min = 2, message = "Ingrese su nombre")
@@ -56,5 +55,4 @@ public class VoterDTO {
             message = "Ingrese un correo válido (@Pattern)"
     )
     private String email;
-
 }
